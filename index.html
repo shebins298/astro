@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jyothisham Astrology</title>
+    <title>ജ്യോതിഷം</title>
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -67,65 +67,56 @@
 </head>
 <body>
     <div class="container">
-        <h1>Jyothisham Astrology</h1>
+        <h1>ജ്യോതിഷം</h1>
         <form id="astroForm">
-            <label>Date of Birth:</label>
+            <label>ജനന തീയതി:</label>
             <input type="date" id="dob" required>
-            
-            <label>Time of Birth:</label>
-            <input type="time" id="tob" required>
 
-            <label>Place of Birth:</label>
-            <input type="text" id="pob" required>
-
-            <button type="submit">Get Horoscope</button>
+            <button type="submit">റാശി കാണുക</button>
         </form>
 
         <div id="result"></div>
     </div>
 
     <script>
+        function getMalayalamRashi(dob) {
+            const date = new Date(dob);
+            const day = date.getUTCDate();
+            const month = date.getUTCMonth() + 1;
+
+            const rashis = [
+                { name: "മേടം (Medam)", range: (month == 4 && day >= 14) || (month == 5 && day <= 14) },
+                { name: "ഇടവം (Edavam)", range: (month == 5 && day >= 15) || (month == 6 && day <= 14) },
+                { name: "മിഥുനം (Mithunam)", range: (month == 6 && day >= 15) || (month == 7 && day <= 16) },
+                { name: "കർക്കിടകം (Karkidakam)", range: (month == 7 && day >= 17) || (month == 8 && day <= 16) },
+                { name: "ചിങ്ങം (Chingam)", range: (month == 8 && day >= 17) || (month == 9 && day <= 16) },
+                { name: "കന്നി (Kanni)", range: (month == 9 && day >= 17) || (month == 10 && day <= 17) },
+                { name: "തുലാം (Thulam)", range: (month == 10 && day >= 18) || (month == 11 && day <= 16) },
+                { name: "വൃശ്ചികം (Vrischikam)", range: (month == 11 && day >= 17) || (month == 12 && day <= 15) },
+                { name: "ധനു (Dhanu)", range: (month == 12 && day >= 16) || (month == 1 && day <= 14) },
+                { name: "മകരം (Makaram)", range: (month == 1 && day >= 15) || (month == 2 && day <= 12) },
+                { name: "കുംഭം (Kumbham)", range: (month == 2 && day >= 13) || (month == 3 && day <= 14) },
+                { name: "മീനം (Meenam)", range: (month == 3 && day >= 15) || (month == 4 && day <= 13) },
+            ];
+
+            return rashis.find(r => r.range)?.name || "അറിയാത്ത റാശി";
+        }
+
         document.getElementById("astroForm").addEventListener("submit", function (e) {
             e.preventDefault();
 
             let dob = document.getElementById("dob").value;
-            let tob = document.getElementById("tob").value;
-            let pob = document.getElementById("pob").value;
-
-            if (!dob || !tob || !pob) {
-                alert("Please enter all details.");
+            if (!dob) {
+                alert("ദയവായി നിങ്ങളുടെ ജനന തീയതി നൽകുക.");
                 return;
             }
 
-            // Simple astrology-based dynamic predictions
-            const signs = [
-                "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", 
-                "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
-            ];
-
-            const predictions = {
-                "Aries": "Expect a dynamic and eventful day. Be open to new opportunities.",
-                "Taurus": "A calm and stable day ahead. Focus on self-care and patience.",
-                "Gemini": "Social interactions will be in your favor. Great for networking.",
-                "Cancer": "Emotions might run high today. Stay balanced and grounded.",
-                "Leo": "Your leadership qualities will shine. A great day for decision-making.",
-                "Virgo": "Attention to detail will help you succeed today.",
-                "Libra": "Harmonious energy surrounds you. A perfect day to resolve conflicts.",
-                "Scorpio": "Transformation and deep insights will guide your day.",
-                "Sagittarius": "Adventure awaits. Take risks but stay cautious.",
-                "Capricorn": "Hard work will bring rewards. Stay consistent.",
-                "Aquarius": "Innovative ideas will flow. A good day for creativity.",
-                "Pisces": "Trust your intuition today. A spiritual connection is likely."
-            };
-
-            let signIndex = new Date(dob).getMonth() % 12;
-            let rashi = signs[signIndex];
-            let prediction = predictions[rashi];
+            let malayalamRashi = getMalayalamRashi(dob);
 
             document.getElementById("result").innerHTML = `
-                <h3>Your Horoscope</h3>
-                <p><b>Rashi:</b> ${rashi}</p>
-                <p><b>Prediction:</b> ${prediction}</p>
+                <h3>നിങ്ങളുടെ ജ്യോതിഷ ഫലം</h3>
+                <p><b>റാശി:</b> ${malayalamRashi}</p>
+                <p><b>ഫലം:</b> നിങ്ങളുടെ ദിനം ഉജ്ജ്വലവും ശാന്തവുമാകുന്നു.</p>
             `;
         });
     </script>
