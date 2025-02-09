@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jyothisham Astrology</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'SF Pro Display', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 380px;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form input, form button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+        }
+
+        form button {
+            background: #007aff;
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        form button:hover {
+            background: #005ecb;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Jyothisham Astrology</h1>
+        <form id="astroForm">
+            <label>Date of Birth:</label>
+            <input type="date" id="dob" required>
+            
+            <label>Time of Birth:</label>
+            <input type="time" id="tob" required>
+
+            <label>Place of Birth:</label>
+            <input type="text" id="pob" required>
+
+            <button type="submit">Get Horoscope</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById("astroForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            let dob = document.getElementById("dob").value;
+            let tob = document.getElementById("tob").value;
+            let pob = document.getElementById("pob").value;
+
+            if (!dob || !tob || !pob) {
+                alert("Please enter all details.");
+                return;
+            }
+
+            // Simple astrology-based dynamic predictions
+            const signs = [
+                "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", 
+                "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+            ];
+
+            const predictions = {
+                "Aries": "Expect a dynamic and eventful day. Be open to new opportunities.",
+                "Taurus": "A calm and stable day ahead. Focus on self-care and patience.",
+                "Gemini": "Social interactions will be in your favor. Great for networking.",
+                "Cancer": "Emotions might run high today. Stay balanced and grounded.",
+                "Leo": "Your leadership qualities will shine. A great day for decision-making.",
+                "Virgo": "Attention to detail will help you succeed today.",
+                "Libra": "Harmonious energy surrounds you. A perfect day to resolve conflicts.",
+                "Scorpio": "Transformation and deep insights will guide your day.",
+                "Sagittarius": "Adventure awaits. Take risks but stay cautious.",
+                "Capricorn": "Hard work will bring rewards. Stay consistent.",
+                "Aquarius": "Innovative ideas will flow. A good day for creativity.",
+                "Pisces": "Trust your intuition today. A spiritual connection is likely."
+            };
+
+            let signIndex = new Date(dob).getMonth() % 12;
+            let rashi = signs[signIndex];
+            let prediction = predictions[rashi];
+
+            document.getElementById("result").innerHTML = `
+                <h3>Your Horoscope</h3>
+                <p><b>Rashi:</b> ${rashi}</p>
+                <p><b>Prediction:</b> ${prediction}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
